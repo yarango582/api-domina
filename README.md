@@ -51,8 +51,75 @@ Para autenticar un usuario, hacer una petición POST a la ruta /login con los si
 }
 ```
 
-Contribuciones
-Las contribuciones son bienvenidas. Si encuentra un problema o tiene una sugerencia de mejora, por favor abra un problema o envíe una solicitud de extracción.
 
-Licencia
+# Microservicio de Lista de Tareas
+
+
+Este es un microservicio que permite crear, actualizar y eliminar tareas de una lista de tareas. Utiliza Express como framework web y MongoDB como base de datos.
+
+## Instalación
+Para utilizar este microservicio, es necesario tener instalado Node.js y MongoDB en su sistema. También necesitará un archivo .env en la raíz del proyecto con la URL de conexión a su base de datos MongoDB.
+
+Una vez que haya clonado o descargado este repositorio, ejecute los siguientes comandos en la terminal:
+
+```
+cd task-service
+npm install
+npm start
+```
+
+Esto instalará las dependencias y ejecutará el servidor en el puerto 3001.
+
+## Uso
+
+El microservicio tiene los siguientes endpoints:
+
+`POST /tasks`
+
+Crea una nueva tarea en la lista.
+
+Parámetros
+
+  * userId - string
+  * title - string
+  * description - string
+
+
+## Respuesta
+Si la tarea se crea correctamente, la respuesta será un objeto JSON con la propiedad id que contiene el ID de la tarea recién creada.
+
+Si falta algún parámetro o se produce un error al crear la tarea, la respuesta tendrá un código de estado HTTP 400 y un objeto JSON con la propiedad message que describe el error.
+
+`PUT /tasks/:id`
+
+Actualiza una tarea existente en la lista.
+
+Parámetros
+
+* id - string
+* title - string
+* description - string
+
+
+Respuesta
+Si la tarea se actualiza correctamente, la respuesta será un objeto JSON con la propiedad message que indica que la tarea se actualizó correctamente.
+
+Si la tarea no se encuentra o se produce un error al actualizar la tarea, la respuesta tendrá un código de estado HTTP 404 y un objeto JSON con la propiedad message que describe el error.
+
+`DELETE /tasks/:id`
+
+Elimina una tarea de la lista.
+
+Parámetros
+
+* id - string
+
+
+Respuesta
+Si la tarea se elimina correctamente, la respuesta será un objeto JSON con la propiedad message que indica que la tarea se eliminó correctamente.
+
+Si la tarea no se encuentra o se produce un error al eliminar la tarea, la respuesta tendrá un código de estado HTTP 404 y un objeto JSON con la propiedad message que describe el error.
+
+
+## Licencia
 Este proyecto está licenciado bajo la Licencia MIT.
