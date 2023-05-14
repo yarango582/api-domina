@@ -85,7 +85,7 @@ app.post('/login', async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json({ message: 'Authenticated successfully' });
+    res.status(200).json({ id: user._id, message: 'Authenticated successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({

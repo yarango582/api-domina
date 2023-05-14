@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { MongoClient, ObjectId } from 'mongodb';
+import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -11,6 +12,7 @@ const dbName = process.env.DB_NAME || 'todolist';
 const collectionName = process.env.COLLECTION_NAME || 'tasks';
 
 app.use(express.json());
+app.use(cors());
 
 // Endpoint para crear una tarea
 app.post('/tasks', async (req: Request, res: Response) => {
@@ -100,6 +102,25 @@ app.delete('/tasks/:id', async (req: Request, res: Response) => {
     res.status(500).json({
       message: 'Internal server error'
     });
+  }
+});
+
+// Endpoint para obtener todas las tareas por usuario
+app.get('/tasks/:userId', async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const client = await MongoClient.connect(mongoUrl);
+    const db = client.db(dbName);
+    const tasks = db.collection(collectionName);
+    const result = await tasks.find({ userId }).toArray();
+    if (result.length === 0) {
+      res.status(404).json({
+        message: 'Tasks not found'
+      });
+    }
+    res.status(200).json(result);
+  } catch (error) {
+    return error;
   }
 });
 

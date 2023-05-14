@@ -11,6 +11,7 @@ export const Login = () => {
     login({ email: values.username, password: values.password })
       .then((response) => {
         message.success("Bienvenido");
+        window.localStorage.setItem("token", response.id);
         navigate("/tasks");
       })
       .catch((error) => {

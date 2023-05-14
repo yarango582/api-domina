@@ -16,7 +16,7 @@ const LayoutApp = ({children} : LayoutAppProps) => {
       <Content className="site-layout" style={{ padding: '110px 50px', marginTop: 64}}>
           {children}
       </Content>
-      <Footer style={{ textAlign: 'center' }}> Domina web ©2023</Footer>
+      <Footer style={{ textAlign: 'center', position: 'sticky', bottom: 0, zIndex: 1, width: '100%' }}> Domina web ©2023</Footer>
     </Layout>
   );
 };
