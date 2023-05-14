@@ -1,57 +1,64 @@
-import { Form, Input, Button, Layout, Row, Col } from "antd";
+import { Form, Input, Button, Layout, Row, Col, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/auth/auth.service";
 
 const { Content } = Layout;
-interface LoginFormProps {
-  onSubmit: (values: any) => void;
-}
 
-export const Login = ({ onSubmit }: LoginFormProps) => {
+export const Login = () => {
+  const navigate = useNavigate();
   const onFinish = (values: any) => {
-    onSubmit(values);
+    login({ email: values.username, password: values.password })
+      .then((response) => {
+        message.success("Bienvenido");
+        navigate("/tasks");
+      })
+      .catch((error) => {
+        if (error?.response?.status === 401)
+          message.error("Usuario o contraseña incorrectos");
+        else  {
+          message.error("Ha ocurrido un error");
+          console.log(error);
+        }
+        return;
+      });
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Content>
-        <Row justify="center" align="middle" style={{ height: "100%" }}>
-          <Col span={6}>
-            <h1>Iniciar sesión</h1>
-            <Form onFinish={onFinish}>
-              <Form.Item
-                name="username"
-                rules={[
-                  { required: true, message: "Por favor ingresa tu usuario" },
-                ]}
-              >
-                <Input prefix={<UserOutlined />} placeholder="Usuario" />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Por favor ingresa tu contraseña",
-                  },
-                ]}
-              >
-                <Input.Password
-                  prefix={<LockOutlined />}
-                  placeholder="Contraseña"
-                />
-              </Form.Item>
-              <Form.Item style={{marginTop: "20px"}}>
-                <Button type="primary" htmlType="submit">
-                  Iniciar sesión
-                </Button>
-                {" "} ¿Aún no tienes una cuenta? {" "}
-                <Link to="/register">Regístrate</Link>
-              </Form.Item>
-            </Form>
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+    <Row justify="center" align="middle" style={{ height: "100%" }}>
+      <Col span={6}>
+        <h1>Iniciar sesión</h1>
+        <Form onFinish={onFinish}>
+          <Form.Item
+            name="username"
+            rules={[
+              { required: true, message: "Por favor ingresa tu usuario" },
+            ]}
+          >
+            <Input prefix={<UserOutlined />} placeholder="Usuario" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Por favor ingresa tu contraseña",
+              },
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="Contraseña"
+            />
+          </Form.Item>
+          <Form.Item style={{ marginTop: "20px" }}>
+            <Button type="primary" htmlType="submit">
+              Iniciar sesión
+            </Button>{" "}
+            ¿Aún no tienes una cuenta? <Link to="/register">Regístrate</Link>
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
   );
 };

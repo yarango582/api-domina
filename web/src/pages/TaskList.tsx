@@ -18,7 +18,11 @@ export const TaskList = ({
   tasks,
 }: TaskFormProps) => {
   const [form] = Form.useForm();
-  tasks = [{id: "2223", title: "hacer oficion"}, {id: "22223", title:" lavar la ropa"}, {id: "222423", title:"hacer de comer"}];
+  tasks = [
+    { id: "2223", title: "hacer oficion" },
+    { id: "22223", title: " lavar la ropa" },
+    { id: "222423", title: "hacer de comer" },
+  ];
 
   useEffect(() => {
     form.resetFields();
@@ -33,56 +37,49 @@ export const TaskList = ({
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Content>
-        <Row justify="center" align="middle" style={{ height: "100%" }}>
-          <Col span={6}>
-            <h1>Task List</h1>
-            <Form form={form} onFinish={onFinish}>
-              <Form.Item name="id" label="Editar tarea">
-                <Select placeholder="Selecciona una tarea">
-                  {tasks.length > 0 && tasks.map((task) => (
-                    <Select.Option value={task.id}>{task.title}</Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="title"
-                label="Título"
-                rules={[
-                  { required: true, message: "Ingresa el título de la tarea" },
-                ]}
-              >
-                <Input placeholder="Título de la tarea" />
-              </Form.Item>
-              <Form.Item
-                name="description"
-                label="Descripción"
-                rules={[
-                  {
-                    required: true,
-                    message: "Ingresa una descripción para la tarea",
-                  },
-                ]}
-              >
-                <Input.TextArea placeholder="Descripción de la tarea" />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  icon={<PlusOutlined />}
-                >
-                  {form.getFieldValue("id") ? "Editar tarea" : "Agregar tarea"}
-                </Button>
-                <Button onClick={onCancel} style={{ marginLeft: "10px" }}>
-                  Cancelar
-                </Button>
-              </Form.Item>
-            </Form>
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+    <Row justify="center" align="middle" style={{ height: "100%" }}>
+      <Col span={6}>
+        <h1 style={{ textAlign: "center" }}>Lista de tareas</h1>
+        <Form form={form} onFinish={onFinish}>
+          <Form.Item name="id" label="Tareas">
+            <Select placeholder="Selecciona una tarea">
+              {tasks.length > 0 &&
+                tasks.map((task) => (
+                  <Select.Option value={task.id}>{task.title}</Select.Option>
+                ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="title"
+            label="Título"
+            rules={[
+              { required: true, message: "Ingresa el título de la tarea" },
+            ]}
+          >
+            <Input placeholder="Título de la tarea" />
+          </Form.Item>
+          <Form.Item
+            name="description"
+            label="Descripción"
+            rules={[
+              {
+                required: true,
+                message: "Ingresa una descripción para la tarea",
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Descripción de la tarea" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" icon={<PlusOutlined />}>
+              {form.getFieldValue("id") ? "Editar tarea" : "Agregar tarea"}
+            </Button>
+            <Button onClick={onCancel} style={{ marginLeft: "10px" }}>
+              Cancelar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
   );
 };

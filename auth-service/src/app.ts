@@ -1,15 +1,17 @@
 import express, { Request, Response } from 'express';
 import { MongoClient } from 'mongodb';
 import bcrypt from 'bcrypt';
+import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
-const dbName = process.env.DB_NAME || 'todolist';
-const collectionName  = process.env.COLLECTION_NAME || 'auth';
+const dbName = process.env.DB_NAME || 'my-app';
+const collectionName  = process.env.COLLECTION_NAME || 'users';
 
 app.use(express.json());
+app.use(cors());
 
 // Endpoint para registrar un usuario
 app.post('/register', async (req: Request, res: Response) => {
@@ -22,12 +24,11 @@ app.post('/register', async (req: Request, res: Response) => {
       });
       return;
     }
-
     // Verificar si el usuario ya existe
     const client = await MongoClient.connect(mongoUrl);
     const db = client.db(dbName);
     const users = db.collection(collectionName);
-    const existingUser = await users.findOne({ username });
+    const existingUser = await users.findOne({ email });
     if (existingUser) {
       res.status(409).json({
         message: 'User already exists'
