@@ -120,6 +120,19 @@ Si la tarea se elimina correctamente, la respuesta será un objeto JSON con la p
 
 Si la tarea no se encuentra o se produce un error al eliminar la tarea, la respuesta tendrá un código de estado HTTP 404 y un objeto JSON con la propiedad message que describe el error.
 
+# web-domina
+
+Para ejecutar el front solo es necesario configurar las env, dentro del archivo .env, alli se debe apuntar hacia el backend de los microservicios respectivos, auth y taks.
+
+antes de inciar:
+
+```
+  npm install
+```
+
+```
+  npm run dev
+```
 
 ## Licencia
 Este proyecto está licenciado bajo la Licencia MIT.

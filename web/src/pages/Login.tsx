@@ -3,8 +3,6 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/auth/auth.service";
 
-const { Content } = Layout;
-
 export const Login = () => {
   const navigate = useNavigate();
   const onFinish = (values: any) => {
@@ -12,7 +10,7 @@ export const Login = () => {
       .then((response) => {
         message.success("Bienvenido");
         window.localStorage.setItem("token", response.id);
-        navigate("/tasks");
+        navigate("/");
       })
       .catch((error) => {
         if (error?.response?.status === 401)
